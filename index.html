@@ -630,6 +630,7 @@ a { text-decoration: none; }
 <li><p><a class="reference internal" href="#helpful-tips-1" id="toc-entry-11">Helpful tips</a></p></li>
 </ul>
 </li>
+<li><p><a class="reference internal" href="#colour-themes" id="toc-entry-12">Colour Themes</a></p></li>
 </ul>
 </nav>
 <section id="arch-linux">
@@ -667,9 +668,6 @@ $ sudoedit /etc/nsswitch.conf</pre>
 # git clone https://aur.archlinux.org/paru.git
 # cd paru
 # makepkg  -si</pre>
-</li>
-<li><p>Afterwards, I replaced the manally built <span class="docutils literal">paru</span> with <span class="docutils literal"><span class="pre">paru-bin</span></span></p>
-<pre class="literal-block">$ paru -S paru-bin</pre>
 </li>
 </ul>
 </section>
@@ -732,6 +730,11 @@ $ asdf plugin-add python
 $ asdf install python latest:3.11
 $ asdf global python system</pre>
 <p>See the <a class="reference external" href="https://asdf-vm.com/guide/getting-started.html">Getting started</a> page for details.</p>
+<p>However, <span class="docutils literal">asdf</span> interferes with <span class="docutils literal">sudo</span>. I learned this the hard way
+on an <cite>EndeavourOS</cite> install, which uses <span class="docutils literal">dracut</span> out of the box instead
+of Arch's <span class="docutils literal">mkinitcpio</span>. Installing new kernels failed pretty hard. See
+this <a class="reference external" href="https://github.com/asdf-vm/asdf/issues/1213">asdf bug report</a> for more details. I used the workaround described
+in the ticket, and set a <span class="docutils literal">secure_path</span> in my <span class="docutils literal">sudo</span> configuration.</p>
 </section>
 <section id="helpful-tips">
 <h3><a class="toc-backref" href="#toc-entry-8" role="doc-backlink">Helpful tips</a></h3>
@@ -775,8 +778,23 @@ folder as well from time to time.</p></li>
 <pre class="literal-block">$ npx npm-global-audit --auditor npm</pre>
 </li>
 </ul>
-<p>More will be added as I learn more about the hell that is npm packages.</p>
 </section>
+</section>
+<section id="colour-themes">
+<h2><a class="toc-backref" href="#toc-entry-12" role="doc-backlink">Colour Themes</a></h2>
+<p>Whenever possible, I'm using a <cite>gruvbox dark</cite> colour theme. They are easily
+available for a lot of of applications I'm using (<span class="docutils literal">cmus</span>, <span class="docutils literal">tmux</span>, the
+JetBrains editors, <span class="docutils literal">alacritty</span>, <span class="docutils literal">vifm</span>, ...)</p>
+<p>One tricky application was <cite>GNOME Terminal</cite>. First off, I used the AUR package
+<span class="docutils literal"><span class="pre">gnome-terminal-transparency</span></span> as I wanted to have a transparent terminal.</p>
+<p>I installed a <cite>Gruvbox Dark</cite> terminal profile by using the <a class="reference external" href="https://github.com/Gogh-Co/Gogh">Gogh</a> GitHub
+repository. I ran the following commands inside a <span class="docutils literal"><span class="pre">gnome-terminal</span></span> session:</p>
+<pre class="literal-block">$ export TERMINAL=gnome-terminal
+$ cd ~/Development
+$ git clone https://github.com/Gogh-Co/Gogh gogh
+$ cd gogh/installs
+$ ./gruvbox-dark.sh</pre>
+<p>More will be added as I learn more about the hell that is npm packages.</p>
 </section>
 </main>
 <footer>
