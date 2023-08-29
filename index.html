@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="generator" content="Docutils 0.20.1: https://docutils.sourceforge.io/" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Braindump</title>
+<title>I use Arch btw</title>
 <style type="text/css">
 
 /* Minimal style sheet for the HTML output of Docutils.                    */
@@ -604,199 +604,238 @@ a { text-decoration: none; }
 </style>
 </head>
 <body class="with-toc">
-<main id="braindump">
-<h1 class="title">Braindump</h1>
+<main id="i-use-arch-btw">
+<h1 class="title">I use Arch btw</h1>
 
 <nav class="contents" id="contents" role="doc-toc">
 <p class="topic-title">Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#arch-linux" id="toc-entry-1">Arch Linux</a></p>
-<ul>
-<li><p><a class="reference internal" href="#basic-setup" id="toc-entry-2">Basic Setup</a></p></li>
-<li><p><a class="reference internal" href="#zero-configuration-networking" id="toc-entry-3">Zero-configuration networking</a></p></li>
-<li><p><a class="reference internal" href="#aur-helper" id="toc-entry-4">AUR helper</a></p></li>
-<li><p><a class="reference internal" href="#helpful-tips-for-package-management" id="toc-entry-5">Helpful tips for package management</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#tool-management" id="toc-entry-6">Tool management</a></p>
-<ul>
-<li><p><a class="reference internal" href="#installation-and-setup" id="toc-entry-7">Installation and Setup</a></p></li>
-<li><p><a class="reference internal" href="#helpful-tips" id="toc-entry-8">Helpful tips</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#nodejs" id="toc-entry-9">NodeJS</a></p>
-<ul>
-<li><p><a class="reference internal" href="#nodejs-updates" id="toc-entry-10">NodeJS updates</a></p></li>
-<li><p><a class="reference internal" href="#helpful-tips-1" id="toc-entry-11">Helpful tips</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#colour-themes" id="toc-entry-12">Colour Themes</a></p></li>
+<li><p><a class="reference internal" href="#introduction" id="toc-entry-1">Introduction</a></p></li>
+<li><p><a class="reference internal" href="#minimal-installation" id="toc-entry-2">Minimal installation</a></p></li>
+<li><p><a class="reference internal" href="#configuring-the-system" id="toc-entry-3">Configuring the system</a></p></li>
 </ul>
 </nav>
-<section id="arch-linux">
-<h2><a class="toc-backref" href="#toc-entry-1" role="doc-backlink">Arch Linux</a></h2>
-<section id="basic-setup">
-<h3><a class="toc-backref" href="#toc-entry-2" role="doc-backlink">Basic Setup</a></h3>
-<p>The basic system setup was done with the
-<a class="reference external" href="https://paedubucher.ch/articles/2020-09-26-arch-linux-setup-with-disk-encryption.html">Arch Linux Setup with Disk Encryption</a> blog post as a guide,
-but with some changes:</p>
+<section id="introduction">
+<h2><a class="toc-backref" href="#toc-entry-1" role="doc-backlink">Introduction</a></h2>
+<p>This document describes the Arch Linux installation progress I went through
+to install it on my laptop (a Dell XPS 13, model 9315). Everything seems to
+work, except for the webcam. But I don't really care for that.</p>
+<p>Note that this is more a braindump than an actual tutorial.</p>
+<p>I used many helpful resources during the installation. Some worth mentioning
+are the
+<a class="reference external" href="https://wiki.archlinux.org/">ArchWiki</a>
+and the very helpful
+<a class="reference external" href="https://paedubucher.ch/articles/2020-09-26-arch-linux-setup-with-disk-encryption.html">Arch Linux Setup with Disk Encryption</a>
+article.</p>
+<p>For the disk layout, I wanted disk encryption, but I did not bother with
+intricate partition layouts or even a swap partition. I just used a single
+root partition (apart from the EFI system partition) and a swap file.</p>
+<p>This is also not a dual boot setup, so I just turned off Secure Boot.</p>
+</section>
+<section id="minimal-installation">
+<h2><a class="toc-backref" href="#toc-entry-2" role="doc-backlink">Minimal installation</a></h2>
 <ul>
-<li><p>I installed <span class="docutils literal">networkmanager</span> instead of <span class="docutils literal">netctl</span>.</p></li>
-<li><p>I created a <a class="reference external" href="https://wiki.archlinux.org/title/Swap#Swap_file">swap file</a>  instead of a swap partition.</p>
-<pre class="literal-block"># dd if=/dev/zero of=/swapfile bs=1M count=16k status=progress
+<li><p>Make sure Secure Boot is disabled.</p></li>
+<li><p>Download the <a class="reference external" href="https://archlinux.org/download/">installation iso</a>
+and boot from it.</p></li>
+<li><p>First thing to do after booting from the iso is connecting to the Wi-Fi:</p>
+<pre class="literal-block"># iwctl --passphrase SECRET station wlan0 connect SSID</pre>
+</li>
+<li><p>After that, test if an internet connection is established:</p>
+<pre class="literal-block"># ping archlinux.org</pre>
+</li>
+<li><p>Find out the name of the device Arch Linux will be installed on:</p>
+<pre class="literal-block"># lsblk</pre>
+<p>It is <span class="docutils literal">/dev/nvme0n1</span> in my case.</p>
+</li>
+<li><p>Fill the SSD with random junk:</p>
+<pre class="literal-block"># shred --random-source=/dev/urandom --iterations=1 /dev/nvme0n1</pre>
+</li>
+<li><p>Next up, create a new GPT partition scheme:</p>
+<pre class="literal-block"># parted -s /dev/nvme0n1 mklabel gpt</pre>
+</li>
+<li><p>Create the EFI system partition:</p>
+<pre class="literal-block"># parted -s /dev/nvme0n1 mkpart boot fat32 1MiB 1025MiB
+# parted -s /dev/nvme0n1 set 1 esp on
+# mkfs.fat -F 32 /dev/nvme0n1p1</pre>
+</li>
+<li><p>Next, create the encrypted root partition:</p>
+<pre class="literal-block"># parted -s /dev/nvme0n1 mkpart root 1025MiB '100%'
+# cryptsetup luksFormat /dev/nvme0n1p2
+# cryptsetup open /dev/nvme0n1p2 root
+# mkfs.ext4 /dev/mapper/root</pre>
+</li>
+<li><p>Mount the partitions:</p>
+<pre class="literal-block"># mount /dev/mapper/root /mnt
+# mkdir /mnt/boot
+# chmod 0700 /mnt/boot
+# mount /dev/nvme0n1p1 /mnt/boot</pre>
+</li>
+<li><p>Bootstrap the installation:</p>
+<pre class="literal-block"># pacstrap /mnt base linux linux-firmware</pre>
+</li>
+<li><p>Generate the <span class="docutils literal">/etc/fstab</span> file:</p>
+<pre class="literal-block"># genfstab -U /mnt &gt;&gt; /mnt/etc/fstab</pre>
+</li>
+<li><p>Chroot into the system:</p>
+<pre class="literal-block"># arch-chroot /mnt</pre>
+</li>
+<li><p>Install some additional software we will need later on:</p>
+<pre class="literal-block"># pacman -S base-devel git networkmanager less man-db neovim
+# echo 'EDITOR=nvim' &gt;&gt; /etc/environment</pre>
+</li>
+<li><p>Configure date and time:</p>
+<pre class="literal-block"># ln -sf /usr/share/zoneinfo/Europe/Brussels /etc/localtime
+# hwclock --systohc</pre>
+</li>
+<li><p>Configure locale:</p>
+<pre class="literal-block"># nvim /etc/locale.gen</pre>
+<p>and enable the line <span class="docutils literal"><span class="pre">en_GB.UTF-8</span> <span class="pre">UTF-8</span></span>. Save, quit and run:</p>
+<pre class="literal-block"># locale-gen
+# echo 'LANG=en_GB.UTF-8' &gt;&gt; /etc/locale.conf</pre>
+</li>
+<li><p>Set hostname:</p>
+<pre class="literal-block"># echo aisha &gt;&gt; /etc/hostname</pre>
+</li>
+<li><p>Create hosts file:</p>
+<pre class="literal-block"># nvim /etc/hosts</pre>
+<p>and add the lines:</p>
+<pre class="literal-block">127.0.0.1 localhost
+127.0.1.1 aisha
+::1 localhost ip6-localhost ip6-loopback</pre>
+</li>
+<li><p>Configure the boot loader (<span class="docutils literal"><span class="pre">systemd-boot</span></span>):</p>
+<pre class="literal-block"># systemd-machine-id-setup
+# bootctl --path=/boot install</pre>
+</li>
+<li><p>Generate boot loader entries:</p>
+<pre class="literal-block"># uuid=$(blkid --match-tag UUID -o value /dev/nvme0n1p2)
+# echo $uuid
+# cat &lt;&lt; EOF &gt; /boot/loader/entries/arch.conf
+&gt; title   Arch Linux
+&gt; linux   /vmlinuz-linux
+&gt; initrd  /initramfs-linux.img
+&gt; options cryptdevice=UUID=${uuid}:root root=/dev/mapper/root rw
+&gt; EOF
+# cat &lt;&lt; EOF &gt; /boot/loader/entries/arch-fallback.conf
+&gt; title   Arch Linux (fallback)
+&gt; linux   /vmlinuz-linux
+&gt; initrd  /initramfs-linux-fallback.img
+&gt; options cryptdevice=UUID=${uuid}:root root=/dev/mapper/root rw
+&gt; EOF</pre>
+</li>
+<li><p>Add <span class="docutils literal">keyboard</span> and <span class="docutils literal">encrypt</span> hooks to <span class="docutils literal">/etc/mkinitcpio.conf</span>:</p>
+<pre class="literal-block">HOOKS=(base udev autodetect modconf kms keyboard keymap consolefont block encrypt filesystems fsck)</pre>
+</li>
+<li><p>Regenerate the initial ramdisk environments:</p>
+<pre class="literal-block"># mkinitcpio -P</pre>
+</li>
+<li><p>Add an admin user account:</p>
+<pre class="literal-block"># useradd -m -G wheel retuow
+# passwd retuow
+# echo '%wheel ALL=(ALL:ALL) ALL' &gt; /etc/sudoers.d/wheel</pre>
+</li>
+<li><p>Reboot into Arch Linux.</p></li>
+</ul>
+</section>
+<section id="configuring-the-system">
+<h2><a class="toc-backref" href="#toc-entry-3" role="doc-backlink">Configuring the system</a></h2>
+<ul>
+<li><p>Configure NetworkManager and connect to the Wi-Fi again:</p>
+<pre class="literal-block">$ sudo nmtui</pre>
+</li>
+<li><p>Enable NTP:</p>
+<pre class="literal-block">$ sudo timedatectl set-ntp true</pre>
+</li>
+<li><p>Create a swap file:</p>
+<pre class="literal-block">$ sudo -i
+# dd if=/dev/zero of=/swapfile bs=1M count=16k status=progress
 # chmod 0600 /swapfile
 # mkswap -U clear /swapfile
 # swapon /swapfile</pre>
 </li>
-<li><p>I did not create separate partitions for <span class="docutils literal">/home</span>, <span class="docutils literal">/tmp</span> or <span class="docutils literal">/var</span>.</p></li>
-</ul>
-</section>
-<section id="zero-configuration-networking">
-<h3><a class="toc-backref" href="#toc-entry-3" role="doc-backlink">Zero-configuration networking</a></h3>
-<p>I installed <span class="docutils literal">avahi</span> for all my mDNS needs (to use the <span class="docutils literal">.local</span> TLD)</p>
-<pre class="literal-block">$ paru -S avahi
+<li><p>Add the swap file to <span class="docutils literal">/etc/fstab</span>:</p>
+<pre class="literal-block"># swap
+/swapfile none swap defaults 0 0</pre>
+</li>
+<li><p>Reload <span class="docutils literal">systemd</span> manager configuration:</p>
+<pre class="literal-block">$ sudo systemctl daemon-reload</pre>
+</li>
+<li><p>Install <span class="docutils literal">paru</span> AUR helper:</p>
+<pre class="literal-block">$ sudo pacman -S rustup
+$ rustup default stable
+$ git clone https://aur.archlinux.org/paru.git
+$ cd paru
+$ makepkg -si</pre>
+</li>
+<li><p>Configure mdns:</p>
+<pre class="literal-block">$ paru -S nss-msdns
 $ sudo systemctl enable avahi-daemon.service
-$ sudo systemctl start avai-daemon
+$ sudo systemctl start avahi-daemon.service
 $ sudoedit /etc/nsswitch.conf</pre>
-<p>See the Arch Wiki on <a class="reference external" href="https://wiki.archlinux.org/title/Avahi">Avahi</a> for details.</p>
-</section>
-<section id="aur-helper">
-<h3><a class="toc-backref" href="#toc-entry-4" role="doc-backlink">AUR helper</a></h3>
-<ul>
-<li><p>During the install, I installed <span class="docutils literal">paru</span> to use as an AUR helper.</p>
-<pre class="literal-block"># pacman -S --needed base-devel
-# git clone https://aur.archlinux.org/paru.git
-# cd paru
-# makepkg  -si</pre>
+<p>and add the <span class="docutils literal">mdns_minimal</span> entry to the <span class="docutils literal">hosts</span> lookup:</p>
+<pre class="literal-block">hosts: mymachines mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] files myhostname dns</pre>
 </li>
-</ul>
-</section>
-<section id="helpful-tips-for-package-management">
-<h3><a class="toc-backref" href="#toc-entry-5" role="doc-backlink">Helpful tips for package management</a></h3>
-<ul>
-<li><p>Having an up to date and properly ranked <span class="docutils literal">mirrorlist</span> file takes a few steps.</p>
-<ul>
-<li><p>Generate a <span class="docutils literal">mirrorlist</span> template using the <a class="reference external" href="https://archlinux.org/mirrorlist/">Pacman Mirrorlist Generator</a>
-and save the file as <span class="docutils literal">/etc/pacman.d/mirrorlist.template</span>.</p></li>
-<li><p>Cross check the file with the <a class="reference external" href="https://archlinux.org/mirrors/status/#successful">Mirror Status</a> page and enable up to 5 mirrors.</p></li>
-<li><p>Install the <span class="docutils literal"><span class="pre">pacman-contrib</span></span> package and use <span class="docutils literal">rankmirrors</span> to rank
-the enabled mirrors.</p>
-<pre class="literal-block"># pacman -S pacman-contrib
-# rankmirrors /etc/pacman.d/mirrorlist.template &gt; /etc/pacman.d/mirrorlist</pre>
+<li><p>Install GNOME:</p>
+<pre class="literal-block">$ paru -S gnome
+$ paru -S power-profiles-daemon gnome-terminal-transparency gnome-tweaks gnome-shell-extensions
+$ paru -S gnome-shell-extension-appindicator gnome-shell-extension-arch-update gnome-shell-extension-no-overview
+$ paru -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
+$ paru -S ttf-dejavu ttf-jetbrains-mono ttf-ubuntu-font-family</pre>
 </li>
-</ul>
+<li><p>Install Firefox:</p>
+<pre class="literal-block">$ paru -S firefox gnome-browser-connector</pre>
 </li>
-<li><p>List installed packages (<span class="docutils literal"><span class="pre">-Q</span></span>) from foreign places (<span class="docutils literal"><span class="pre">-m</span></span>) like the AUR:</p>
-<pre class="literal-block">$ pacman -Qm</pre>
+<li><p>Go to <a class="reference external" href="https://extensions.gnome.org/">https://extensions.gnome.org/</a> and install the <em>Gnome Shell
+integration</em> plugin. Next, install the <em>Unblank lock screen</em> extension.</p></li>
+<li><p>Enable sound:</p>
+<pre class="literal-block">$ paru -S sof-firmware pipewire pipewire-alsa pipewire-pulse</pre>
 </li>
-<li><p>Clean up orphaned dependencies:</p>
-<pre class="literal-block">$ pacman -Qdtq | sudo pacman -Rns -</pre>
-<p>The first <span class="docutils literal">pacman</span> command will list installed packages (<span class="docutils literal"><span class="pre">-Q</span></span>)
-that are installed as dependencies (<span class="docutils literal"><span class="pre">-d</span></span>) but are no longer needed
-(<span class="docutils literal"><span class="pre">-t</span></span>) and without showing version information (<span class="docutils literal"><span class="pre">-q</span></span>).</p>
-<p>The second <span class="docutils literal">pacman</span> command will remove (<span class="docutils literal"><span class="pre">-R</span></span>) those packages
-without saving backups (<span class="docutils literal"><span class="pre">-n</span></span>) and do it recursively (<span class="docutils literal"><span class="pre">-s</span></span>).</p>
-<pre class="literal-block">$ paru -c</pre>
-<p>Also removes unneeded dependencies.</p>
+<li><p>Enable Bluetooth:</p>
+<pre class="literal-block">$ paru -S bluez bluez-utils
+$ sudo systemctl enable bluetooth.service
+$ sudo systemctl start bluetooth.service</pre>
 </li>
-<li><p>Do a system upgrade:</p>
-<pre class="literal-block">$ paru -Syu --nocombinedupgrade</pre>
-<p>First, <span class="docutils literal">pacman <span class="pre">-Syu</span></span> will be called, then the AUR upgrade will start.
-This means the upgrade menu and PKGBUILD review will be performed after
-the system upgrade has finished.</p>
+<li><p>Configure firmware update support:</p>
+<pre class="literal-block">$ paru -S fwupd gnome-firmware</pre>
 </li>
-<li><p>Show what package a file belongs to:</p>
-<pre class="literal-block">$ pacman -Qo &lt;file&gt;</pre>
+<li><p>Install some additional software:</p>
+<pre class="literal-block">$ paru -S inetutils neofetch openbsd-netcat pacman-contrib vifm
+$ paru -S 1password 1password-cli asdf-vm protonvpn</pre>
 </li>
-<li><p>Show packages that depend on a given package:</p>
-<pre class="literal-block">$ pactree -r &lt;package&gt;</pre>
-<p>The <span class="docutils literal">pactree</span> command is found in the <span class="docutils literal"><span class="pre">pacman-contrib</span></span> package.</p>
+<li><p>Configure <span class="docutils literal">reflector</span> to keep the <span class="docutils literal">pacman</span> mirrorlist up to date:</p>
+<pre class="literal-block">$ paru -S reflector rsync
+$ sudoedit /etc/xdg/reflector/reflector.conf
+$ sudo systemctl start reflector.service
+$ sudo systemctl enable reflector.timer
+$ sudo systemctl start reflector.timer</pre>
 </li>
-</ul>
-</section>
-</section>
-<section id="tool-management">
-<h2><a class="toc-backref" href="#toc-entry-6" role="doc-backlink">Tool management</a></h2>
-<section id="installation-and-setup">
-<h3><a class="toc-backref" href="#toc-entry-7" role="doc-backlink">Installation and Setup</a></h3>
-<p>I installed <span class="docutils literal"><span class="pre">asdf-vm</span></span> from the AUR to manage tool versions
-(think Java, NodeJS, Python, etc).</p>
-<p>I installed the latest LTS version (18.17.0 at the time of writing)
-of NodeJS and made it the global default. For Python,
-I decided to keep the system version as the global default.</p>
-<pre class="literal-block">$ paru -S asdf-vm
-$ asdf plugin-add nodejs
-$ asdf install nodejs latest:18
-$ asdf global nodejs 18.17.0
-$ asdf plugin-add python
-$ asdf install python latest:3.11
-$ asdf global python system</pre>
-<p>See the <a class="reference external" href="https://asdf-vm.com/guide/getting-started.html">Getting started</a> page for details.</p>
-<p>However, <span class="docutils literal">asdf</span> interferes with <span class="docutils literal">sudo</span>. I learned this the hard way
-on an <cite>EndeavourOS</cite> install, which uses <span class="docutils literal">dracut</span> out of the box instead
-of Arch's <span class="docutils literal">mkinitcpio</span>. Installing new kernels failed pretty hard. See
-this <a class="reference external" href="https://github.com/asdf-vm/asdf/issues/1213">asdf bug report</a> for more details. I used the workaround described
-in the ticket, and set a <span class="docutils literal">secure_path</span> in my <span class="docutils literal">sudo</span> configuration.</p>
-</section>
-<section id="helpful-tips">
-<h3><a class="toc-backref" href="#toc-entry-8" role="doc-backlink">Helpful tips</a></h3>
-<p>There is commandline completion for <span class="docutils literal">asdf</span>. This works out of the box
-if the <span class="docutils literal"><span class="pre">bash-completion</span></span> package is installed.</p>
-<ul>
-<li><p>Set a certain version for the current directory:</p>
-<pre class="literal-block">$ asdf local &lt;tool&gt; &lt;version&gt;</pre>
+<li><p>Configure user-mountable NAS shares:</p>
+<pre class="literal-block">$ sudo mkdir -p /etc/samba/credentials
+$ sudo touch /etc/samba/credentials/nas
+$ sudo chown retuow: /etc/samba/credentials/nas
+$ sudo chmod 0600 /etc/samba/credentials/nas
+$ nvim /etc/samba/credentials/nas</pre>
+<p>Make sure the file only contains these settings:</p>
+<pre class="literal-block">username=retuow
+password=SECRET</pre>
+<p>Add entries for the NAS shares to <span class="docutils literal">/etc/fstab</span>:</p>
+<pre class="literal-block"># NAS SMB Shares
+//SERVER/Share /mnt/share cifs _netdev,nofail,credentials=/etc/samba/credentials/nas,user,noauto,uid=retuow,gid=retuow 0 0</pre>
+<p>Reload <span class="docutils literal">systemd</span> manager configuration:</p>
+<pre class="literal-block">$ sudo systemctl daemon-reload</pre>
 </li>
-<li><p>Set a certain version for the current shell:</p>
-<pre class="literal-block">$ asdf shell &lt;tool&gt; &lt;version&gt;</pre>
-</li>
-</ul>
-</section>
-</section>
-<section id="nodejs">
-<h2><a class="toc-backref" href="#toc-entry-9" role="doc-backlink">NodeJS</a></h2>
-<section id="nodejs-updates">
-<h3><a class="toc-backref" href="#toc-entry-10" role="doc-backlink">NodeJS updates</a></h3>
-<p>I use <span class="docutils literal">asdf</span> (see above) to always have the latest LTS version of NodeJS
-installed.</p>
-</section>
-<section id="helpful-tips-1">
-<h3><a class="toc-backref" href="#toc-entry-11" role="doc-backlink">Helpful tips</a></h3>
-<ul>
-<li><p>List globally installed packages:</p>
-<pre class="literal-block">$ npm list -g</pre>
-</li>
-<li><p>List globally installed outdated packages and install them:</p>
-<pre class="literal-block">$ npm list outdated -g
-$ npm update -g</pre>
-</li>
-<li><p>Use <span class="docutils literal">ncu</span> to check for packages that can be updated in a project:</p>
-<pre class="literal-block">$ npm install -g npm-check-updates
-$ ncu</pre>
-</li>
-<li><p>When using <span class="docutils literal">npx</span> to run a command without installing it into the project,
-the downloaded packages will be installed in <span class="docutils literal"><span class="pre">~/.npm/_npx</span></span>. So clean that
-folder as well from time to time.</p></li>
-<li><p>Run an audit on your globally installed npm packages:</p>
-<pre class="literal-block">$ npx npm-global-audit --auditor npm</pre>
-</li>
-</ul>
-</section>
-</section>
-<section id="colour-themes">
-<h2><a class="toc-backref" href="#toc-entry-12" role="doc-backlink">Colour Themes</a></h2>
-<p>Whenever possible, I'm using a <cite>gruvbox dark</cite> colour theme. They are easily
-available for a lot of of applications I'm using (<span class="docutils literal">cmus</span>, <span class="docutils literal">tmux</span>, the
-JetBrains editors, <span class="docutils literal">alacritty</span>, <span class="docutils literal">vifm</span>, ...)</p>
-<p>One tricky application was <cite>GNOME Terminal</cite>. First off, I used the AUR package
-<span class="docutils literal"><span class="pre">gnome-terminal-transparency</span></span> as I wanted to have a transparent terminal.</p>
-<p>I installed a <cite>Gruvbox Dark</cite> terminal profile by using the <a class="reference external" href="https://github.com/Gogh-Co/Gogh">Gogh</a> GitHub
-repository. I ran the following commands inside a <span class="docutils literal"><span class="pre">gnome-terminal</span></span> session:</p>
+<li><p>Configure GNOME Terminal:</p>
 <pre class="literal-block">$ export TERMINAL=gnome-terminal
 $ cd ~/Development
 $ git clone https://github.com/Gogh-Co/Gogh gogh
 $ cd gogh/installs
 $ ./gruvbox-dark.sh</pre>
-<p>More will be added as I learn more about the hell that is npm packages.</p>
+</li>
+<li><p>Configure bash, tmux, neovim</p>
+<p>See my <a class="reference external" href="https://github.com/retuow/dotfiles">dotfiles</a> repository.</p>
+</li>
+</ul>
 </section>
 </main>
 <footer>
