@@ -1,282 +1,562 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <meta name="generator" content="Docutils 0.20.1: https://docutils.sourceforge.io/" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>I use Arch btw</title>
 <style type="text/css">
 
-/*
-:Author: David Goodger (goodger@python.org)
-:Id: $Id: html4css1.css 8954 2022-01-20 10:10:25Z milde $
-:Copyright: This stylesheet has been placed in the public domain.
+/* Minimal style sheet for the HTML output of Docutils.                    */
+/*                                                                         */
+/* :Author: Günter Milde, based on html4css1.css by David Goodger          */
+/* :Id: $Id: minimal.css 9079 2022-06-19 14:00:56Z milde $                                                               */
+/* :Copyright: © 2015, 2021 Günter Milde.                                  */
+/* :License: Released under the terms of the `2-Clause BSD license`_,      */
+/*    in short:                                                            */
+/*                                                                         */
+/*    Copying and distribution of this file, with or without modification, */
+/*    are permitted in any medium without royalty provided the copyright   */
+/*    notice and this notice are preserved.                                */
+/*                                                                         */
+/*    This file is offered as-is, without any warranty.                    */
+/*                                                                         */
+/* .. _2-Clause BSD license: http://www.spdx.org/licenses/BSD-2-Clause     */
 
-Default cascading style sheet for the HTML output of Docutils.
+/* This CSS3 stylesheet defines rules for Docutils elements without        */
+/* HTML equivalent. It is required to make the document semantics visible. */
+/*                                                                         */
+/* .. _validates: http://jigsaw.w3.org/css-validator/validator$link        */
 
-See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
-customize this style sheet.
-*/
-
-/* used to remove borders from tables and images */
-.borderless, table.borderless td, table.borderless th {
-  border: 0 }
-
-table.borderless td, table.borderless th {
-  /* Override padding for "table.docutils td" with "! important".
-     The right padding separates the table cells. */
-  padding: 0 0.5em 0 0 ! important }
-
-.first {
-  /* Override more specific margin styles with "! important". */
-  margin-top: 0 ! important }
-
-.last, .with-subtitle {
-  margin-bottom: 0 ! important }
-
-.hidden {
-  display: none }
-
-.subscript {
-  vertical-align: sub;
-  font-size: smaller }
-
-.superscript {
-  vertical-align: super;
-  font-size: smaller }
-
+/* titles */
+p.topic-title,
+p.admonition-title,
+p.system-message-title {
+  font-weight: bold;
+}
+p.sidebar-title,
+p.rubric {
+  font-weight: bold;
+  font-size: larger;
+}
+p.rubric {
+  color: maroon;
+}
+p.subtitle,
+p.section-subtitle,
+p.sidebar-subtitle {
+  font-weight: bold;
+  margin-top: -0.5em;
+}
+h1 + p.subtitle {
+  font-size: 1.6em;
+}
 a.toc-backref {
-  text-decoration: none ;
-  color: black }
+  color: inherit;
+  text-decoration: none;
+}
 
-blockquote.epigraph {
-  margin: 2em 5em ; }
+/* Warnings, Errors */
+.system-messages h2,
+.system-message-title,
+span.problematic {
+  color: red;
+}
 
-dl.docutils dd {
-  margin-bottom: 0.5em }
+/* Inline Literals */
+.docutils.literal {
+  font-family: monospace;
+  white-space: pre-wrap;
+}
+/* do not wrap at hyphens and similar: */
+.literal > span.pre { white-space: nowrap; }
 
-object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+/* Lists */
+
+/* compact and simple lists: no margin between items */
+.simple  li, .simple  ul, .simple  ol,
+.compact li, .compact ul, .compact ol,
+.simple  > li p, dl.simple  > dd,
+.compact > li p, dl.compact > dd {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+/* Nested Paragraphs */
+p:first-child { margin-top: 0; }
+p:last-child { margin-bottom: 0; }
+details > p:last-child { margin-bottom: 1em; }
+
+/* Table of Contents */
+.contents ul.auto-toc { /* section numbers present */
+  list-style-type: none;
+}
+
+/* Enumerated Lists */
+ol.arabic     { list-style: decimal }
+ol.loweralpha { list-style: lower-alpha }
+ol.upperalpha { list-style: upper-alpha }
+ol.lowerroman { list-style: lower-roman }
+ol.upperroman { list-style: upper-roman }
+
+/* Definition Lists and Derivatives */
+dt .classifier { font-style: italic }
+dt .classifier:before {
+  font-style: normal;
+  margin: 0.5em;
+  content: ":";
+}
+/* Field Lists and similar */
+/* bold field name, content starts on the same line */
+dl.field-list,
+dl.option-list,
+dl.docinfo {
+  display: flow-root;
+}
+dl.field-list > dt,
+dl.option-list > dt,
+dl.docinfo > dt {
+  font-weight: bold;
+  clear: left;
+  float: left;
+  margin: 0;
+  padding: 0;
+  padding-right: 0.2em;
+}
+/* Offset for field content (corresponds to the --field-name-limit option) */
+dl.field-list > dd,
+dl.option-list > dd,
+dl.docinfo > dd {
+  margin-left:  9em; /* ca. 14 chars in the test examples, fit all Docinfo fields */
+}
+/* start nested lists on new line */
+dd > dl:first-child,
+dd > ul:first-child,
+dd > ol:first-child {
+  clear: left;
+}
+/* start field-body on a new line after long field names */
+dl.field-list > dd > *:first-child,
+dl.option-list > dd > *:first-child
+{
+  display: inline-block;
+  width: 100%;
+  margin: 0;
+}
+
+/* Bibliographic Fields (docinfo) */
+dl.docinfo pre.address {
+  font: inherit;
+  margin: 0.5em 0;
+}
+dl.docinfo > dd.authors > p { margin: 0; }
+
+/* Option Lists */
+dl.option-list > dt { font-weight: normal; }
+span.option { white-space: nowrap; }
+
+/* Footnotes and Citations  */
+
+.footnote, .citation { margin: 1em 0; } /* default paragraph skip (Firefox) */
+/* hanging indent */
+.citation { padding-left: 2em; }
+.footnote { padding-left: 1.7em; }
+.footnote.superscript { padding-left: 1.0em; }
+.citation > .label { margin-left: -2em; }
+.footnote > .label { margin-left: -1.7em; }
+.footnote.superscript > .label { margin-left: -1.0em; }
+
+.footnote > .label + *,
+.citation > .label + * {
+  display: inline-block;
+  margin-top: 0;
+  vertical-align: top;
+}
+.footnote > .backrefs + *,
+.citation > .backrefs + * {
+  margin-top: 0;
+}
+.footnote > .label + p, .footnote > .backrefs + p,
+.citation > .label + p, .citation > .backrefs + p {
+  display: inline;
+  vertical-align: inherit;
+}
+
+.backrefs { user-select: none; }
+.backrefs > a { font-style: italic; }
+
+/* superscript footnotes */
+a[role="doc-noteref"].superscript,
+.footnote.superscript > .label,
+.footnote.superscript > .backrefs {
+  vertical-align: super;
+  font-size: smaller;
+  line-height: 1;
+}
+a[role="doc-noteref"].superscript > .fn-bracket,
+.footnote.superscript > .label > .fn-bracket {
+  /* hide brackets in display but leave for copy/paste */
+  display: inline-block;
+  width: 0;
   overflow: hidden;
 }
-
-/* Uncomment (and remove this text!) to get bold-faced definition list terms
-dl.docutils dt {
-  font-weight: bold }
-*/
-
-div.abstract {
-  margin: 2em 5em }
-
-div.abstract p.topic-title {
-  font-weight: bold ;
-  text-align: center }
-
-div.admonition, div.attention, div.caution, div.danger, div.error,
-div.hint, div.important, div.note, div.tip, div.warning {
-  margin: 2em ;
-  border: medium outset ;
-  padding: 1em }
-
-div.admonition p.admonition-title, div.hint p.admonition-title,
-div.important p.admonition-title, div.note p.admonition-title,
-div.tip p.admonition-title {
-  font-weight: bold ;
-  font-family: sans-serif }
-
-div.attention p.admonition-title, div.caution p.admonition-title,
-div.danger p.admonition-title, div.error p.admonition-title,
-div.warning p.admonition-title, .code .error {
-  color: red ;
-  font-weight: bold ;
-  font-family: sans-serif }
-
-/* Uncomment (and remove this text!) to get reduced vertical space in
-   compound paragraphs.
-div.compound .compound-first, div.compound .compound-middle {
-  margin-bottom: 0.5em }
-
-div.compound .compound-last, div.compound .compound-middle {
-  margin-top: 0.5em }
-*/
-
-div.dedication {
-  margin: 2em 5em ;
-  text-align: center ;
-  font-style: italic }
-
-div.dedication p.topic-title {
-  font-weight: bold ;
-  font-style: normal }
-
-div.figure {
-  margin-left: 2em ;
-  margin-right: 2em }
-
-div.footer, div.header {
-  clear: both;
-  font-size: smaller }
-
-div.line-block {
-  display: block ;
-  margin-top: 1em ;
-  margin-bottom: 1em }
-
-div.line-block div.line-block {
-  margin-top: 0 ;
-  margin-bottom: 0 ;
-  margin-left: 1.5em }
-
-div.sidebar {
-  margin: 0 0 0.5em 1em ;
-  border: medium outset ;
-  padding: 1em ;
-  background-color: #ffffee ;
-  width: 40% ;
-  float: right ;
-  clear: right }
-
-div.sidebar p.rubric {
-  font-family: sans-serif ;
-  font-size: medium }
-
-div.system-messages {
-  margin: 5em }
-
-div.system-messages h1 {
-  color: red }
-
-div.system-message {
-  border: medium outset ;
-  padding: 1em }
-
-div.system-message p.system-message-title {
-  color: red ;
-  font-weight: bold }
-
-div.topic {
-  margin: 2em }
-
-h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
-h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
-  margin-top: 0.4em }
-
-h1.title {
-  text-align: center }
-
-h2.subtitle {
-  text-align: center }
-
-hr.docutils {
-  width: 75% }
-
-img.align-left, .figure.align-left, object.align-left, table.align-left {
-  clear: left ;
-  float: left ;
-  margin-right: 1em }
-
-img.align-right, .figure.align-right, object.align-right, table.align-right {
-  clear: right ;
-  float: right ;
-  margin-left: 1em }
-
-img.align-center, .figure.align-center, object.align-center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+[role="doc-noteref"].superscript + [role="doc-noteref"].superscript {
+  padding-left: 0.15em; /* separate consecutive footnote references */
+  /* TODO: unfortunately, "+" also selects with text between the references. */
 }
 
-table.align-center {
-  margin-left: auto;
+/* Alignment */
+.align-left   {
+  text-align: left;
   margin-right: auto;
 }
-
-.align-left {
-  text-align: left }
-
 .align-center {
-  clear: both ;
-  text-align: center }
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.align-right  {
+  text-align: right;
+  margin-left: auto;
+}
+.align-top    { vertical-align: top; }
+.align-middle { vertical-align: middle; }
+.align-bottom { vertical-align: bottom; }
 
-.align-right {
-  text-align: right }
+/* reset inner alignment in figures and tables */
+figure.align-left, figure.align-right,
+table.align-left, table.align-center, table.align-right {
+  text-align: inherit;
+}
 
-/* reset inner alignment in figures */
-div.align-right {
-  text-align: inherit }
+/* Text Blocks */
+.topic { margin: 1em 2em; }
+.sidebar,
+.admonition,
+.system-message {
+  margin: 1em 2em;
+  border: thin solid;
+  padding: 0.5em 1em;
+}
+div.line-block { display: block; }
+div.line-block div.line-block, pre { margin-left: 2em; }
 
-/* div.align-center * { */
-/*   text-align: left } */
+/* Code line numbers: dropped when copying text from the page */
+pre.code .ln { display: none; }
+pre.code code:before {
+  content: attr(data-lineno); /* …, none) fallback not supported by any browser */
+  color: gray;
+}
 
-.align-top    {
-  vertical-align: top }
+/* Tables */
+table {
+  border-collapse: collapse;
+}
+td, th {
+  border: thin solid silver;
+  padding: 0 1ex;
+}
+.borderless td, .borderless th {
+  border: 0;
+  padding: 0;
+  padding-right: 0.5em /* separate table cells */
+}
 
-.align-middle {
-  vertical-align: middle }
+table > caption {
+  text-align: left;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+}
+table.captionbelow {
+  caption-side: bottom;
+}
 
-.align-bottom {
-  vertical-align: bottom }
+/* Document Header and Footer */
+header { border-bottom: 1px solid black; }
+footer { border-top: 1px solid black; }
 
-ol.simple, ul.simple {
-  margin-bottom: 1em }
+/* Images are block-level by default in Docutils */
+/* New HTML5 block elements: set display for older browsers */
+img, header, footer, main, aside, nav, section, figure, video, details {
+  display: block;
+}
+/* inline images */
+p img, p video, figure img, figure video {
+  display: inline;
+}
 
-ol.arabic {
-  list-style: decimal }
+</style>
+<style type="text/css">
 
-ol.loweralpha {
-  list-style: lower-alpha }
+/* CSS31_ style sheet for the output of Docutils HTML writers.             */
+/* Rules for easy reading and pre-defined style variants.                  */
+/*                                                                         */
+/* :Author: Günter Milde, based on html4css1.css by David Goodger          */
+/* :Id: $Id: plain.css 9338 2023-04-08 21:08:47Z milde $                                                               */
+/* :Copyright: © 2015 Günter Milde.                                        */
+/* :License: Released under the terms of the `2-Clause BSD license`_,      */
+/*    in short:                                                            */
+/*                                                                         */
+/*    Copying and distribution of this file, with or without modification, */
+/*    are permitted in any medium without royalty provided the copyright   */
+/*    notice and this notice are preserved.                                */
+/*                                                                         */
+/*    This file is offered as-is, without any warranty.                    */
+/*                                                                         */
+/* .. _2-Clause BSD license: http://www.spdx.org/licenses/BSD-2-Clause     */
+/* .. _CSS3: https://www.w3.org/Style/CSS/                                 */
 
-ol.upperalpha {
-  list-style: upper-alpha }
 
-ol.lowerroman {
-  list-style: lower-roman }
+/* Document Structure */
+/* ****************** */
 
-ol.upperroman {
-  list-style: upper-roman }
+/* "page layout" */
+body {
+  margin: 0;
+  background-color: #dbdbdb;
+  --field-indent: 9em; /* default indent of fields in field lists */
+}
+main, footer, header {
+  line-height:1.6;
+  /* avoid long lines --> better reading */
+  /* optimum is 45…75 characters/line <http://webtypography.net/2.1.2> */
+  /* OTOH: lines should not be too short because of missing hyphenation, */
+  max-width: 50rem;
+  padding: 1px 2%; /* 1px on top avoids grey bar above title (mozilla) */
+  margin: auto;
+}
+main {
+  counter-reset: table figure;
+  background-color: white;
+}
+footer, header {
+  font-size: smaller;
+  padding: 0.5em 2%;
+  border: none;
+}
 
-p.attribution {
-  text-align: right ;
-  margin-left: 50% }
+/* Table of Contents */
+ul.auto-toc > li > p {
+  padding-left: 1em;
+  text-indent: -1em;
+}
+nav.contents ul {
+  padding-left: 1em;
+}
+main > nav.contents ul ul ul ul:not(.auto-toc) {
+  list-style-type: '\2B29\ ';
+}
+main > nav.contents ul ul ul ul ul:not(.auto-toc) {
+  list-style-type: '\2B1D\ ';
+}
 
-p.caption {
-  font-style: italic }
+/* Transitions */
+hr.docutils {
+  width: 80%;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  clear: both;
+}
 
-p.credits {
-  font-style: italic ;
-  font-size: smaller }
+/* Paragraphs */
 
-p.label {
-  white-space: nowrap }
+/* vertical space (parskip) */
+p, ol, ul, dl, li,
+div.line-block,
+.footnote, .citation,
+div > math,
+table {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
 
-p.rubric {
-  font-weight: bold ;
-  font-size: larger ;
-  color: maroon ;
-  text-align: center }
+h1, h2, h3, h4, h5, h6,
+dd, details > p:last-child {
+  margin-bottom: 0.5em;
+}
 
-p.sidebar-title {
-  font-family: sans-serif ;
-  font-weight: bold ;
-  font-size: larger }
+/* Lists */
+/* ===== */
 
-p.sidebar-subtitle {
-  font-family: sans-serif ;
-  font-weight: bold }
+/* Definition Lists */
+/* Indent lists nested in definition lists */
+dd > ul:only-child, dd > ol:only-child { padding-left: 1em; }
 
-p.topic-title {
-  font-weight: bold }
+/* Description Lists */
+/* styled like in most dictionaries, encyclopedias etc. */
+dl.description {
+  display: flow-root;
+}
+dl.description > dt {
+  font-weight: bold;
+  clear: left;
+  float: left;
+  margin: 0;
+  padding: 0;
+  padding-right: 0.3em;
+}
+dl.description > dd:after {
+  display: table;
+  content: "";
+  clear: left; /* clearfix for empty descriptions */
+}
 
-pre.address {
-  margin-bottom: 0 ;
-  margin-top: 0 ;
-  font: inherit }
+/* Field Lists */
 
-pre.literal-block, pre.doctest-block, pre.math, pre.code {
-  margin-left: 2em ;
-  margin-right: 2em }
+dl.field-list > dd,
+dl.docinfo > dd {
+  margin-left: var(--field-indent); /* adapted in media queries or HTML */
+}
 
-pre.code .ln { color: grey; } /* line numbers */
+/* example for custom field-name width */
+dl.field-list.narrow > dd {
+  --field-indent: 5em;
+}
+/* run-in: start field-body on same line after long field names */
+dl.field-list.run-in > dd p {
+  display: block;
+}
+
+/* Bibliographic Fields */
+
+/* generally, bibliographic fields use dl.docinfo */
+/* but dedication and abstract are placed into divs */
+div.abstract p.topic-title {
+  text-align: center;
+}
+div.dedication {
+  margin: 2em 5em;
+  text-align: center;
+  font-style: italic;
+}
+div.dedication p.topic-title {
+  font-style: normal;
+}
+
+/* disclosures */
+details { padding-left: 1em; }
+summary { margin-left: -1em; }
+
+/* Text Blocks */
+/* =========== */
+
+/* Literal Blocks */
+pre.literal-block, pre.doctest-block,
+pre.math, pre.code {
+  font-family: monospace;
+}
+
+/* Block Quotes and Topics */
+bockquote { margin: 1em 2em; }
+blockquote p.attribution,
+.topic p.attribution {
+  text-align: right;
+  margin-left: 20%;
+}
+
+/* Tables */
+/* ====== */
+
+/* th { vertical-align: bottom; } */
+
+table tr { text-align: left; }
+
+/* "booktabs" style (no vertical lines) */
+table.booktabs {
+  border: 0;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.booktabs * {
+  border: 0;
+}
+table.booktabs th {
+  border-bottom: thin solid;
+}
+
+/* numbered tables (counter defined in div.document) */
+table.numbered > caption:before {
+  counter-increment: table;
+  content: "Table " counter(table) ": ";
+  font-weight: bold;
+}
+
+/* Explicit Markup Blocks */
+/* ====================== */
+
+/* Footnotes and Citations */
+/* ----------------------- */
+
+/* line on the left */
+.footnote-list {
+  border-left: solid thin;
+  padding-left: 0.25em;
+}
+
+/* Directives */
+/* ---------- */
+
+/* Body Elements */
+/* ~~~~~~~~~~~~~ */
+
+/* Images and Figures */
+
+/* let content flow to the side of aligned images and figures */
+figure.align-left,
+img.align-left,
+video.align-left,
+object.align-left {
+  clear: left;
+  float: left;
+  margin-right: 1em;
+}
+figure.align-right,
+img.align-right,
+video.align-right,
+object.align-right {
+  clear: right;
+  float: right;
+  margin-left: 1em;
+}
+/* Stop floating sidebars, images and figures */
+h1, h2, h3, h4, footer, header { clear: both; }
+
+/* Numbered figures */
+figure.numbered > figcaption > p:before {
+  counter-increment: figure;
+  content: "Figure " counter(figure) ": ";
+  font-weight: bold;
+}
+
+/* Admonitions and System Messages */
+.caution p.admonition-title,
+.attention p.admonition-title,
+.danger p.admonition-title,
+.error p.admonition-title,
+.warning p.admonition-title,
+div.error {
+  color: red;
+}
+
+/* Sidebar */
+/* Move right. In a layout with fixed margins, */
+/* it can be moved into the margin.            */
+aside.sidebar {
+  width: 30%;
+  max-width: 26em;
+  float: right;
+  clear: right;
+  margin-left: 1em;
+  margin-right: -1%;
+  background-color: #fffffa;
+}
+
+
+/* Code */
+pre.code { padding: 0.7ex }
 pre.code, code { background-color: #eeeeee }
+/* basic highlighting: for a complete scheme, see */
+/* https://docutils.sourceforge.io/sandbox/stylesheets/ */
 pre.code .comment, code .comment { color: #5C6576 }
 pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
 pre.code .literal.string, code .literal.string { color: #0C5404 }
@@ -284,95 +564,59 @@ pre.code .name.builtin, code .name.builtin { color: #352B84 }
 pre.code .deleted, code .deleted { background-color: #DEB0A1}
 pre.code .inserted, code .inserted { background-color: #A3D289}
 
-span.classifier {
-  font-family: sans-serif ;
-  font-style: oblique }
-
-span.classifier-delimiter {
-  font-family: sans-serif ;
-  font-weight: bold }
-
-span.interpreted {
-  font-family: sans-serif }
-
-span.option {
-  white-space: nowrap }
-
-span.pre {
-  white-space: pre }
-
-span.problematic {
-  color: red }
-
-span.section-subtitle {
-  /* font-size relative to parent (h1..h6 element) */
-  font-size: 80% }
-
-table.citation {
-  border-left: solid 1px gray;
-  margin-left: 1px }
-
-table.docinfo {
-  margin: 2em 4em }
-
-table.docutils {
-  margin-top: 0.5em ;
-  margin-bottom: 0.5em }
-
-table.footnote {
-  border-left: solid 1px black;
-  margin-left: 1px }
-
-table.docutils td, table.docutils th,
-table.docinfo td, table.docinfo th {
-  padding-left: 0.5em ;
-  padding-right: 0.5em ;
-  vertical-align: top }
-
-table.docutils th.field-name, table.docinfo th.docinfo-name {
-  font-weight: bold ;
-  text-align: left ;
-  white-space: nowrap ;
-  padding-left: 0 }
-
-/* "booktabs" style (no vertical lines) */
-table.docutils.booktabs {
-  border: 0px;
-  border-top: 2px solid;
-  border-bottom: 2px solid;
-  border-collapse: collapse;
+/* Math */
+/* for math-output=MathML (for math-output=HTML, see math.css) */
+math .boldsymbol {
+  font-weight: bold;
 }
-table.docutils.booktabs * {
-  border: 0px;
-}
-table.docutils.booktabs th {
-  border-bottom: thin solid;
-  text-align: left;
+mstyle.mathscr, mi.mathscr {
+  font-family: STIX, XITSMathJax_Script, rsfs10,
+               "Asana Math", Garamond, cursive;
 }
 
-h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
-h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
-  font-size: 100% }
+/* Epigraph           */
+/* Highlights         */
+/* Pull-Quote         */
+/* Compound Paragraph */
+/* Container          */
 
-ul.auto-toc {
-  list-style-type: none }
+/* Inline Markup */
+/* ============= */
+
+sup, sub { line-height: 0.8; } /* do not add leading for lines with sup/sub */
+
+/* Inline Literals                                          */
+/* possible values: normal, nowrap, pre, pre-wrap, pre-line */
+/*   span.docutils.literal { white-space: pre-wrap; }       */
+
+/* Hyperlink References */
+a { text-decoration: none; }
+
+/* External Targets       */
+/*   span.target.external */
+/* Internal Targets       */
+/*   span.target.internal */
+/* Footnote References    */
+/*   a[role="doc-noteref"] */
+/* Citation References    */
+/*   a.citation-reference */
 
 </style>
 </head>
-<body>
-<div class="document" id="i-use-arch-btw">
+<body class="with-toc">
+<main id="i-use-arch-btw">
 <h1 class="title">I use Arch btw</h1>
 
-<div class="contents topic" id="contents">
+<nav class="contents" id="contents" role="doc-toc">
 <p class="topic-title">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#introduction" id="toc-entry-1">Introduction</a></li>
-<li><a class="reference internal" href="#minimal-installation" id="toc-entry-2">Minimal installation</a></li>
-<li><a class="reference internal" href="#configuring-the-system" id="toc-entry-3">Configuring the system</a></li>
+<li><p><a class="reference internal" href="#introduction" id="toc-entry-1">Introduction</a></p></li>
+<li><p><a class="reference internal" href="#minimal-installation" id="toc-entry-2">Minimal installation</a></p></li>
+<li><p><a class="reference internal" href="#configuring-the-system" id="toc-entry-3">Configuring the system</a></p></li>
 </ul>
-</div>
-<div class="section" id="introduction">
-<h1><a class="toc-backref" href="#toc-entry-1">Introduction</a></h1>
+</nav>
+<section id="introduction">
+<h2><a class="toc-backref" href="#toc-entry-1" role="doc-backlink">Introduction</a></h2>
 <p>This document describes the Arch Linux installation process I went through
 to install it on my laptop (a Dell XPS 13, model 9315). Everything seems to
 work, except for the webcam. But I don't really care for that.</p>
@@ -387,126 +631,85 @@ article.</p>
 intricate partition layouts or even a swap partition. I just used a single
 root partition (apart from the EFI system partition) and a swap file.</p>
 <p>This is also not a dual boot setup, so I just turned off Secure Boot.</p>
-</div>
-<div class="section" id="minimal-installation">
-<h1><a class="toc-backref" href="#toc-entry-2">Minimal installation</a></h1>
+</section>
+<section id="minimal-installation">
+<h2><a class="toc-backref" href="#toc-entry-2" role="doc-backlink">Minimal installation</a></h2>
 <ul>
-<li><p class="first">Make sure Secure Boot is disabled.</p>
+<li><p>Make sure Secure Boot is disabled.</p></li>
+<li><p>Download the <a class="reference external" href="https://archlinux.org/download/">installation iso</a>
+and boot from it.</p></li>
+<li><p>First thing to do after booting from the iso is connecting to the Wi-Fi:</p>
+<pre class="literal-block"># iwctl --passphrase SECRET station wlan0 connect SSID</pre>
 </li>
-<li><p class="first">Download the <a class="reference external" href="https://archlinux.org/download/">installation iso</a>
-and boot from it.</p>
+<li><p>After that, test if an internet connection is established:</p>
+<pre class="literal-block"># ping archlinux.org</pre>
 </li>
-<li><p class="first">First thing to do after booting from the iso is connecting to the Wi-Fi:</p>
-<pre class="literal-block">
-# iwctl --passphrase SECRET station wlan0 connect SSID
-</pre>
+<li><p>Find out the name of the device Arch Linux will be installed on:</p>
+<pre class="literal-block"># lsblk</pre>
+<p>It is <span class="docutils literal">/dev/nvme0n1</span> in my case.</p>
 </li>
-<li><p class="first">After that, test if an internet connection is established:</p>
-<pre class="literal-block">
-# ping archlinux.org
-</pre>
+<li><p>Fill the SSD with random junk:</p>
+<pre class="literal-block"># shred --random-source=/dev/urandom --iterations=1 /dev/nvme0n1</pre>
 </li>
-<li><p class="first">Find out the name of the device Arch Linux will be installed on:</p>
-<pre class="literal-block">
-# lsblk
-</pre>
-<p>It is <tt class="docutils literal">/dev/nvme0n1</tt> in my case.</p>
+<li><p>Next up, create a new GPT partition scheme:</p>
+<pre class="literal-block"># parted -s /dev/nvme0n1 mklabel gpt</pre>
 </li>
-<li><p class="first">Fill the SSD with random junk:</p>
-<pre class="literal-block">
-# shred --random-source=/dev/urandom --iterations=1 /dev/nvme0n1
-</pre>
-</li>
-<li><p class="first">Next up, create a new GPT partition scheme:</p>
-<pre class="literal-block">
-# parted -s /dev/nvme0n1 mklabel gpt
-</pre>
-</li>
-<li><p class="first">Create the EFI system partition:</p>
-<pre class="literal-block">
-# parted -s /dev/nvme0n1 mkpart boot fat32 1MiB 1025MiB
+<li><p>Create the EFI system partition:</p>
+<pre class="literal-block"># parted -s /dev/nvme0n1 mkpart boot fat32 1MiB 1025MiB
 # parted -s /dev/nvme0n1 set 1 esp on
-# mkfs.fat -F 32 /dev/nvme0n1p1
-</pre>
+# mkfs.fat -F 32 /dev/nvme0n1p1</pre>
 </li>
-<li><p class="first">Next, create the encrypted root partition:</p>
-<pre class="literal-block">
-# parted -s /dev/nvme0n1 mkpart root 1025MiB '100%'
+<li><p>Next, create the encrypted root partition:</p>
+<pre class="literal-block"># parted -s /dev/nvme0n1 mkpart root 1025MiB '100%'
 # cryptsetup luksFormat /dev/nvme0n1p2
 # cryptsetup open /dev/nvme0n1p2 root
-# mkfs.ext4 /dev/mapper/root
-</pre>
+# mkfs.ext4 /dev/mapper/root</pre>
 </li>
-<li><p class="first">Mount the partitions:</p>
-<pre class="literal-block">
-# mount /dev/mapper/root /mnt
+<li><p>Mount the partitions:</p>
+<pre class="literal-block"># mount /dev/mapper/root /mnt
 # mkdir /mnt/boot
 # chmod 0700 /mnt/boot
-# mount /dev/nvme0n1p1 /mnt/boot
-</pre>
+# mount /dev/nvme0n1p1 /mnt/boot</pre>
 </li>
-<li><p class="first">Bootstrap the installation:</p>
-<pre class="literal-block">
-# pacstrap /mnt base linux linux-firmware
-</pre>
+<li><p>Bootstrap the installation:</p>
+<pre class="literal-block"># pacstrap /mnt base linux linux-firmware</pre>
 </li>
-<li><p class="first">Generate the <tt class="docutils literal">/etc/fstab</tt> file:</p>
-<pre class="literal-block">
-# genfstab -U /mnt &gt;&gt; /mnt/etc/fstab
-</pre>
+<li><p>Generate the <span class="docutils literal">/etc/fstab</span> file:</p>
+<pre class="literal-block"># genfstab -U /mnt &gt;&gt; /mnt/etc/fstab</pre>
 </li>
-<li><p class="first">Chroot into the system:</p>
-<pre class="literal-block">
-# arch-chroot /mnt
-</pre>
+<li><p>Chroot into the system:</p>
+<pre class="literal-block"># arch-chroot /mnt</pre>
 </li>
-<li><p class="first">Install some additional software we will need later on:</p>
-<pre class="literal-block">
-# pacman -S base-devel git networkmanager less man-db neovim
-# echo 'EDITOR=nvim' &gt;&gt; /etc/environment
-</pre>
+<li><p>Install some additional software we will need later on:</p>
+<pre class="literal-block"># pacman -S base-devel git networkmanager less man-db neovim
+# echo 'EDITOR=nvim' &gt;&gt; /etc/environment</pre>
 </li>
-<li><p class="first">Configure date and time:</p>
-<pre class="literal-block">
-# ln -sf /usr/share/zoneinfo/Europe/Brussels /etc/localtime
-# hwclock --systohc
-</pre>
+<li><p>Configure date and time:</p>
+<pre class="literal-block"># ln -sf /usr/share/zoneinfo/Europe/Brussels /etc/localtime
+# hwclock --systohc</pre>
 </li>
-<li><p class="first">Configure locale:</p>
-<pre class="literal-block">
-# nvim /etc/locale.gen
-</pre>
-<p>and enable the line <tt class="docutils literal"><span class="pre">en_GB.UTF-8</span> <span class="pre">UTF-8</span></tt>. Save, quit and run:</p>
-<pre class="literal-block">
-# locale-gen
-# echo 'LANG=en_GB.UTF-8' &gt;&gt; /etc/locale.conf
-</pre>
+<li><p>Configure locale:</p>
+<pre class="literal-block"># nvim /etc/locale.gen</pre>
+<p>and enable the line <span class="docutils literal"><span class="pre">en_GB.UTF-8</span> <span class="pre">UTF-8</span></span>. Save, quit and run:</p>
+<pre class="literal-block"># locale-gen
+# echo 'LANG=en_GB.UTF-8' &gt;&gt; /etc/locale.conf</pre>
 </li>
-<li><p class="first">Set hostname:</p>
-<pre class="literal-block">
-# echo aisha &gt;&gt; /etc/hostname
-</pre>
+<li><p>Set hostname:</p>
+<pre class="literal-block"># echo aisha &gt;&gt; /etc/hostname</pre>
 </li>
-<li><p class="first">Create hosts file:</p>
-<pre class="literal-block">
-# nvim /etc/hosts
-</pre>
+<li><p>Create hosts file:</p>
+<pre class="literal-block"># nvim /etc/hosts</pre>
 <p>and add the lines:</p>
-<pre class="literal-block">
-127.0.0.1 localhost
+<pre class="literal-block">127.0.0.1 localhost
 127.0.1.1 aisha
-::1 localhost ip6-localhost ip6-loopback
-</pre>
+::1 localhost ip6-localhost ip6-loopback</pre>
 </li>
-<li><p class="first">Configure the boot loader (<tt class="docutils literal"><span class="pre">systemd-boot</span></tt>):</p>
-<pre class="literal-block">
-# systemd-machine-id-setup
-# bootctl --path=/boot install
-</pre>
+<li><p>Configure the boot loader (<span class="docutils literal"><span class="pre">systemd-boot</span></span>):</p>
+<pre class="literal-block"># systemd-machine-id-setup
+# bootctl --path=/boot install</pre>
 </li>
-<li><p class="first">Generate boot loader entries:</p>
-<pre class="literal-block">
-# uuid=$(blkid --match-tag UUID -o value /dev/nvme0n1p2)
+<li><p>Generate boot loader entries:</p>
+<pre class="literal-block"># uuid=$(blkid --match-tag UUID -o value /dev/nvme0n1p2)
 # echo $uuid
 # cat &lt;&lt; EOF &gt; /boot/loader/entries/arch.conf
 &gt; title   Arch Linux
@@ -519,175 +722,125 @@ and boot from it.</p>
 &gt; linux   /vmlinuz-linux
 &gt; initrd  /initramfs-linux-fallback.img
 &gt; options cryptdevice=UUID=${uuid}:root root=/dev/mapper/root rw
-&gt; EOF
-</pre>
+&gt; EOF</pre>
 </li>
-<li><p class="first">Add <tt class="docutils literal">keyboard</tt> and <tt class="docutils literal">encrypt</tt> hooks to <tt class="docutils literal">/etc/mkinitcpio.conf</tt>:</p>
-<pre class="literal-block">
-HOOKS=(base udev autodetect modconf kms keyboard keymap consolefont block encrypt filesystems fsck)
-</pre>
+<li><p>Add <span class="docutils literal">keyboard</span> and <span class="docutils literal">encrypt</span> hooks to <span class="docutils literal">/etc/mkinitcpio.conf</span>:</p>
+<pre class="literal-block">HOOKS=(base udev autodetect modconf kms keyboard keymap consolefont block encrypt filesystems fsck)</pre>
 </li>
-<li><p class="first">Regenerate the initial ramdisk environments:</p>
-<pre class="literal-block">
-# mkinitcpio -P
-</pre>
+<li><p>Regenerate the initial ramdisk environments:</p>
+<pre class="literal-block"># mkinitcpio -P</pre>
 </li>
-<li><p class="first">Add an admin user account:</p>
-<pre class="literal-block">
-# useradd -m -G wheel retuow
+<li><p>Add an admin user account:</p>
+<pre class="literal-block"># useradd -m -G wheel retuow
 # passwd retuow
-# echo '%wheel ALL=(ALL:ALL) ALL' &gt; /etc/sudoers.d/wheel
-</pre>
+# echo '%wheel ALL=(ALL:ALL) ALL' &gt; /etc/sudoers.d/wheel</pre>
 </li>
-<li><p class="first">Reboot into Arch Linux.</p>
-</li>
+<li><p>Reboot into Arch Linux.</p></li>
 </ul>
-</div>
-<div class="section" id="configuring-the-system">
-<h1><a class="toc-backref" href="#toc-entry-3">Configuring the system</a></h1>
+</section>
+<section id="configuring-the-system">
+<h2><a class="toc-backref" href="#toc-entry-3" role="doc-backlink">Configuring the system</a></h2>
 <ul>
-<li><p class="first">Configure NetworkManager and connect to the Wi-Fi again:</p>
-<pre class="literal-block">
-$ sudo nmtui
-</pre>
+<li><p>Configure NetworkManager and connect to the Wi-Fi again:</p>
+<pre class="literal-block">$ sudo nmtui</pre>
 </li>
-<li><p class="first">Enable NTP:</p>
-<pre class="literal-block">
-$ sudo timedatectl set-ntp true
-</pre>
+<li><p>Enable NTP:</p>
+<pre class="literal-block">$ sudo timedatectl set-ntp true</pre>
 </li>
-<li><p class="first">Create a swap file:</p>
-<pre class="literal-block">
-$ sudo -i
+<li><p>Create a swap file:</p>
+<pre class="literal-block">$ sudo -i
 # dd if=/dev/zero of=/swapfile bs=1M count=16k status=progress
 # chmod 0600 /swapfile
 # mkswap -U clear /swapfile
-# swapon /swapfile
-</pre>
+# swapon /swapfile</pre>
 </li>
-<li><p class="first">Add the swap file to <tt class="docutils literal">/etc/fstab</tt>:</p>
-<pre class="literal-block">
-# swap
-/swapfile none swap defaults 0 0
-</pre>
+<li><p>Add the swap file to <span class="docutils literal">/etc/fstab</span>:</p>
+<pre class="literal-block"># swap
+/swapfile none swap defaults 0 0</pre>
 </li>
-<li><p class="first">Reload <tt class="docutils literal">systemd</tt> manager configuration:</p>
-<pre class="literal-block">
-$ sudo systemctl daemon-reload
-</pre>
+<li><p>Reload <span class="docutils literal">systemd</span> manager configuration:</p>
+<pre class="literal-block">$ sudo systemctl daemon-reload</pre>
 </li>
-<li><p class="first">Install <tt class="docutils literal">paru</tt> AUR helper:</p>
-<pre class="literal-block">
-$ sudo pacman -S rustup
+<li><p>Install <span class="docutils literal">paru</span> AUR helper:</p>
+<pre class="literal-block">$ sudo pacman -S rustup
 $ rustup default stable
 $ git clone https://aur.archlinux.org/paru.git
 $ cd paru
-$ makepkg -si
-</pre>
+$ makepkg -si</pre>
 </li>
-<li><p class="first">Configure mdns:</p>
-<pre class="literal-block">
-$ paru -S nss-msdns
+<li><p>Configure mdns:</p>
+<pre class="literal-block">$ paru -S nss-msdns
 $ sudo systemctl enable avahi-daemon.service
 $ sudo systemctl start avahi-daemon.service
-$ sudoedit /etc/nsswitch.conf
-</pre>
-<p>and add the <tt class="docutils literal">mdns_minimal</tt> entry to the <tt class="docutils literal">hosts</tt> lookup:</p>
-<pre class="literal-block">
-hosts: mymachines mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] files myhostname dns
-</pre>
+$ sudoedit /etc/nsswitch.conf</pre>
+<p>and add the <span class="docutils literal">mdns_minimal</span> entry to the <span class="docutils literal">hosts</span> lookup:</p>
+<pre class="literal-block">hosts: mymachines mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] files myhostname dns</pre>
 </li>
-<li><p class="first">Install GNOME:</p>
-<pre class="literal-block">
-$ paru -S gnome
+<li><p>Install GNOME:</p>
+<pre class="literal-block">$ paru -S gnome
 $ paru -S power-profiles-daemon gnome-terminal-transparency gnome-tweaks gnome-shell-extensions
 $ paru -S gnome-shell-extension-appindicator gnome-shell-extension-arch-update gnome-shell-extension-no-overview
 $ paru -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
-$ paru -S ttf-dejavu ttf-jetbrains-mono ttf-ubuntu-font-family
-</pre>
+$ paru -S ttf-dejavu ttf-jetbrains-mono ttf-ubuntu-font-family</pre>
 </li>
-<li><p class="first">Install Firefox:</p>
-<pre class="literal-block">
-$ paru -S firefox gnome-browser-connector
-</pre>
+<li><p>Install Firefox:</p>
+<pre class="literal-block">$ paru -S firefox gnome-browser-connector</pre>
 </li>
-<li><p class="first">Go to <a class="reference external" href="https://extensions.gnome.org/">https://extensions.gnome.org/</a> and install the <em>Gnome Shell
-integration</em> plugin. Next, install the <em>Unblank lock screen</em> extension.</p>
+<li><p>Go to <a class="reference external" href="https://extensions.gnome.org/">https://extensions.gnome.org/</a> and install the <em>Gnome Shell
+integration</em> plugin. Next, install the <em>Unblank lock screen</em> extension.</p></li>
+<li><p>Enable sound:</p>
+<pre class="literal-block">$ paru -S sof-firmware pipewire pipewire-alsa pipewire-pulse</pre>
 </li>
-<li><p class="first">Enable sound:</p>
-<pre class="literal-block">
-$ paru -S sof-firmware pipewire pipewire-alsa pipewire-pulse
-</pre>
-</li>
-<li><p class="first">Enable Bluetooth:</p>
-<pre class="literal-block">
-$ paru -S bluez bluez-utils
+<li><p>Enable Bluetooth:</p>
+<pre class="literal-block">$ paru -S bluez bluez-utils
 $ sudo systemctl enable bluetooth.service
-$ sudo systemctl start bluetooth.service
-</pre>
+$ sudo systemctl start bluetooth.service</pre>
 </li>
-<li><p class="first">Configure firmware update support:</p>
-<pre class="literal-block">
-$ paru -S fwupd gnome-firmware
-</pre>
+<li><p>Configure firmware update support:</p>
+<pre class="literal-block">$ paru -S fwupd gnome-firmware</pre>
 </li>
-<li><p class="first">Install some additional software:</p>
-<pre class="literal-block">
-$ paru -S inetutils neofetch openbsd-netcat pacman-contrib vifm
-$ paru -S 1password 1password-cli asdf-vm protonvpn
-</pre>
+<li><p>Install some additional software:</p>
+<pre class="literal-block">$ paru -S inetutils neofetch openbsd-netcat pacman-contrib vifm
+$ paru -S 1password 1password-cli asdf-vm protonvpn</pre>
 </li>
-<li><p class="first">Configure <tt class="docutils literal">reflector</tt> to keep the <tt class="docutils literal">pacman</tt> mirrorlist up to date:</p>
-<pre class="literal-block">
-$ paru -S reflector rsync
+<li><p>Configure <span class="docutils literal">reflector</span> to keep the <span class="docutils literal">pacman</span> mirrorlist up to date:</p>
+<pre class="literal-block">$ paru -S reflector rsync
 $ sudoedit /etc/xdg/reflector/reflector.conf
 $ sudo systemctl start reflector.service
 $ sudo systemctl enable reflector.timer
-$ sudo systemctl start reflector.timer
-</pre>
+$ sudo systemctl start reflector.timer</pre>
 </li>
-<li><p class="first">Configure user-mountable NAS shares:</p>
-<pre class="literal-block">
-$ sudo mkdir -p /etc/samba/credentials
+<li><p>Configure user-mountable NAS shares:</p>
+<pre class="literal-block">$ sudo mkdir -p /etc/samba/credentials
 $ sudo touch /etc/samba/credentials/nas
 $ sudo chown retuow: /etc/samba/credentials/nas
 $ sudo chmod 0600 /etc/samba/credentials/nas
-$ nvim /etc/samba/credentials/nas
-</pre>
+$ nvim /etc/samba/credentials/nas</pre>
 <p>Make sure the file only contains these settings:</p>
-<pre class="literal-block">
-username=retuow
-password=SECRET
-</pre>
-<p>Add entries for the NAS shares to <tt class="docutils literal">/etc/fstab</tt>:</p>
-<pre class="literal-block">
-# NAS SMB Shares
-//SERVER/Share /mnt/share cifs _netdev,nofail,credentials=/etc/samba/credentials/nas,user,noauto,uid=retuow,gid=retuow 0 0
-</pre>
-<p>Reload <tt class="docutils literal">systemd</tt> manager configuration:</p>
-<pre class="literal-block">
-$ sudo systemctl daemon-reload
-</pre>
+<pre class="literal-block">username=retuow
+password=SECRET</pre>
+<p>Add entries for the NAS shares to <span class="docutils literal">/etc/fstab</span>:</p>
+<pre class="literal-block"># NAS SMB Shares
+//SERVER/Share /mnt/share cifs _netdev,nofail,credentials=/etc/samba/credentials/nas,user,noauto,uid=retuow,gid=retuow 0 0</pre>
+<p>Reload <span class="docutils literal">systemd</span> manager configuration:</p>
+<pre class="literal-block">$ sudo systemctl daemon-reload</pre>
 </li>
-<li><p class="first">Configure GNOME Terminal:</p>
-<pre class="literal-block">
-$ export TERMINAL=gnome-terminal
+<li><p>Configure GNOME Terminal:</p>
+<pre class="literal-block">$ export TERMINAL=gnome-terminal
 $ cd ~/Development
 $ git clone https://github.com/Gogh-Co/Gogh gogh
 $ cd gogh/installs
-$ ./gruvbox-dark.sh
-</pre>
+$ ./gruvbox-dark.sh</pre>
 </li>
-<li><p class="first">Configure bash, tmux, neovim</p>
+<li><p>Configure bash, tmux, neovim</p>
 <p>See my <a class="reference external" href="https://github.com/retuow/dotfiles">dotfiles</a> repository.</p>
 </li>
 </ul>
-</div>
-</div>
-<div class="footer">
-<hr class="footer" />
-Generated by <a class="reference external" href="https://docutils.sourceforge.io/">Docutils</a> from <a class="reference external" href="https://docutils.sourceforge.io/rst.html">reStructuredText</a> source.
-
-</div>
+</section>
+</main>
+<footer>
+<p>Generated by <a class="reference external" href="https://docutils.sourceforge.io/">Docutils</a> from <a class="reference external" href="https://docutils.sourceforge.io/rst.html">reStructuredText</a> source.
+</p>
+</footer>
 </body>
 </html>
