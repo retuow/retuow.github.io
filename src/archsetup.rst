@@ -281,6 +281,10 @@ Configuring the system
     $ cd gogh/installs
     $ ./gruvbox-dark.sh
 
+  **TIP:** Go to the *Preferences - General* and turn off the option
+  *Enable the menu accelerator key* if you want to use the ``F10`` key
+  (in ``htop`` for example).
+
 - Configure bash, tmux, neovim
 
   See my `dotfiles <https://github.com/retuow/dotfiles>`_ repository.
