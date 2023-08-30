@@ -1,0 +1,52 @@
+/* Custom style sheet for the HTML output of DocUtils.                     */
+/* To be used together with minimal.css and responsive.css                 */
+/* Mostly overrides colours, inspired by the colour palette of             */
+/* the Gruvbox Dark theme.                                                 */
+/* See: https://github.com/morhetz/gruvbox#dark-mode-1                     */
+
+body {
+    background-color: #1d2021;
+}
+
+body > * {
+    background-color: #282828;
+    color: #fbf1c7;
+}
+
+pre.literal-block, pre.doctest {
+    padding: 1em;
+    border: thin solid #d79921;
+}
+
+.literal-block, .doctest {
+    background-color: #1d2021;
+    color: #ebdbb2;
+}
+
+span.literal {
+    background-color: transparent;
+}
+
+a.external, a.external:visited {
+    color: #83a598;
+}
+
+h2, h3, h4, h5, h6, .topic-title {
+    color: #98971a;
+}
+
+section:target > h2, section:target > h3, section:target > h4,
+section:target > h5, section:target > h6,
+.contents :target,
+.contents:target > .topic-title,
+[role="doc-biblioentry"]:target > .label,
+[role="doc-biblioref"]:target,
+[role="note"]:target, /* Docutils 0.18 ... 0.19 */
+[role="doc-footnote"]:target, /* Docutils >= 0.20 */
+[role="doc-noteref"]:target {
+    background-color: transparent;
+}
+
+main > nav.contents {
+    background-color: #1d2021;
+}
