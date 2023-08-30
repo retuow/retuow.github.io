@@ -793,6 +793,9 @@ integration</em> plugin. Next, install the <em>Unblank lock screen</em> extensio
 <pre class="literal-block">$ paru -S bluez bluez-utils
 $ sudo systemctl enable bluetooth.service
 $ sudo systemctl start bluetooth.service</pre>
+<p>Enable the <em>Fast Connectable</em> setting in
+<span class="docutils literal">/etc/bluetooth/main.conf</span>:</p>
+<pre class="literal-block">FastConnectable = true</pre>
 </li>
 <li><p>Configure firmware update support:</p>
 <pre class="literal-block">$ paru -S fwupd gnome-firmware</pre>
@@ -811,7 +814,7 @@ $ sudo systemctl start reflector.timer</pre>
 <li><p>Configure user-mountable NAS shares:</p>
 <pre class="literal-block">$ sudo mkdir -p /etc/samba/credentials
 $ sudo touch /etc/samba/credentials/nas
-$ sudo chown retuow: /etc/samba/credentials/nas
+$ sudo chown retuow:retuow /etc/samba/credentials/nas
 $ sudo chmod 0600 /etc/samba/credentials/nas
 $ nvim /etc/samba/credentials/nas</pre>
 <p>Make sure the file only contains these settings:</p>
@@ -832,6 +835,13 @@ $ ./gruvbox-dark.sh</pre>
 </li>
 <li><p>Configure bash, tmux, neovim</p>
 <p>See my <a class="reference external" href="https://github.com/retuow/dotfiles">dotfiles</a> repository.</p>
+</li>
+<li><p>Configure Keychron Bluetooth keyboard:</p>
+<pre class="literal-block">$ sudoedit /etc/modprobe.d/hid_apple.conf</pre>
+<p>Set the following options:</p>
+<pre class="literal-block">options hid_apple fnmode=2 swap_opt_cmd</pre>
+<p>Regenerate the initramfs:</p>
+<pre class="literal-block">$ sudo mkinitcpio -P</pre>
 </li>
 </ul>
 </section>
