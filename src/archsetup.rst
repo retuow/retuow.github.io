@@ -208,7 +208,7 @@ Configuring the system
 
     $ paru -S gnome
     $ paru -S power-profiles-daemon gnome-terminal-transparency gnome-tweaks gnome-shell-extensions
-    $ paru -S gnome-shell-extension-appindicator gnome-shell-extension-arch-update gnome-shell-extension-no-overview
+    $ paru -S gnome-shell-extension-appindicator gnome-shell-extension-arch-update gnome-shell-extension-no-overview gnome-shell-extension-dash-to-dock
     $ paru -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
     $ paru -S ttf-dejavu ttf-jetbrains-mono ttf-ubuntu-font-family
 
