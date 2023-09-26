@@ -287,7 +287,7 @@ Configuring the system
 
 - Configure bash, tmux, neovim
 
-  See my `dotfiles <https://github.com/retuow/dotfiles>`_ repository.
+  See my `dotfiles <https://gitlab.com/retuow/dotfiles>`_ repository.
 
 - Configure Keychron Bluetooth keyboard::
 
