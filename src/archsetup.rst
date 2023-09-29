@@ -208,16 +208,20 @@ Configuring the system
 
     $ paru -S gnome
     $ paru -S power-profiles-daemon gnome-terminal-transparency gnome-tweaks gnome-shell-extensions
-    $ paru -S gnome-shell-extension-appindicator gnome-shell-extension-arch-update gnome-shell-extension-no-overview gnome-shell-extension-dash-to-dock
     $ paru -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
     $ paru -S ttf-dejavu ttf-jetbrains-mono ttf-ubuntu-font-family
+
+- Go to `<https://extensions.gnome.org/>`_ and install the *Gnome Shell
+  integration* plugin. Next, install the following extensions:
+  
+    * AppIndicator and KStatusNotifierItem Support
+    * Arch Linux Updates Indicator
+    * No Overview at start-up
+    * Unblank lock screen
 
 - Install Firefox::
 
     $ paru -S firefox gnome-browser-connector
-
-- Go to `<https://extensions.gnome.org/>`_ and install the *Gnome Shell
-  integration* plugin. Next, install the *Unblank lock screen* extension.
 
 - Enable sound::
 
