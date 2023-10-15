@@ -244,7 +244,7 @@ Configuring the system
 
 - Install some additional software::
 
-    $ paru -S inetutils neofetch openbsd-netcat pacman-contrib vifm tmux
+    $ paru -S inetutils neofetch openbsd-netcat pacman-contrib vifm tmux bottom
     $ paru -S 1password 1password-cli asdf-vm protonvpn
 
 - Configure ``reflector`` to keep the ``pacman`` mirrorlist up to date::
@@ -304,3 +304,13 @@ Configuring the system
   Regenerate the initramfs::
 
     $ sudo mkinitcpio -P
+
+Maintenance
+===========
+
+- Clean up the ``pacman`` cache::
+
+    $ sudo paccache -rk2
+
+  This will remove all but the 2 latest versions from the cache. The
+  ``paccache`` binary is part of the ``pacman-contrib`` package.
