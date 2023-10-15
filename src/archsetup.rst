@@ -216,7 +216,8 @@ Configuring the system
   
     * AppIndicator and KStatusNotifierItem Support
     * Arch Linux Updates Indicator
-    * No Overview at start-up
+    * Dash to Dock
+    * Grand Theft Focus
     * Unblank lock screen
 
 - Install Firefox::
