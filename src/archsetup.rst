@@ -211,6 +211,10 @@ Configuring the system
     $ paru -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
     $ paru -S ttf-dejavu ttf-jetbrains-mono ttf-ubuntu-font-family
 
+- Install Firefox::
+
+    $ paru -S firefox gnome-browser-connector
+
 - Go to `<https://extensions.gnome.org/>`_ and install the *Gnome Shell
   integration* plugin. Next, install the following extensions:
   
@@ -219,10 +223,6 @@ Configuring the system
     * Dash to Dock
     * Grand Theft Focus
     * Unblank lock screen
-
-- Install Firefox::
-
-    $ paru -S firefox gnome-browser-connector
 
 - Enable sound::
 
